@@ -17,6 +17,7 @@ type MobileConfig struct {
 	Store          bool   //Use badger store
 	LogLevel       string //debug, info, warn, error, fatal, panic
 	DatabaseDir    string //path to BadgerDB
+	Bootstrap      bool   // Bootstrap node
 	Moniker        string //optional name
 }
 
@@ -30,6 +31,7 @@ func NewMobileConfig(heartbeat int,
 	store bool,
 	logLevel string,
 	databaseDir string,
+	bootstrap bool,
 	moniker string) *MobileConfig {
 
 	return &MobileConfig{
@@ -42,6 +44,7 @@ func NewMobileConfig(heartbeat int,
 		Store:          store,
 		LogLevel:       logLevel,
 		DatabaseDir:    databaseDir,
+		Bootstrap:      bootstrap,
 		Moniker:        moniker,
 	}
 }
@@ -57,6 +60,7 @@ func DefaultMobileConfig() *MobileConfig {
 		EnableFastSync: true,
 		Store:          false,
 		DatabaseDir:    "",
+		Bootstrap:      false,
 		LogLevel:       "debug",
 	}
 }
@@ -75,6 +79,7 @@ func (c *MobileConfig) toBabbleConfig() *config.Config {
 	babbleConfig.EnableFastSync = c.EnableFastSync
 	babbleConfig.ServiceAddr = ""
 	babbleConfig.DatabaseDir = c.DatabaseDir
+	babbleConfig.Bootstrap = c.Bootstrap
 
 	return babbleConfig
 }
